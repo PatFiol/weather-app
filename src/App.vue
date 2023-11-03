@@ -3,15 +3,22 @@
 		<header class="header">
 			<img class="logo" src="./assets/logo.png" alt="" />
 			<h1>Weather Forecast</h1>
-
 		</header>
 		<main>
-			<input id="search-bar" type="text">
+		<WeatherPanel/>
 		</main>
 	</div>
 </template>
 
-<script></script>
+<script>
+	import WeatherPanel from './components/WeatherPanel.vue'
+	export default {
+		name: 'App',
+		components: {
+			WeatherPanel
+		}
+	}
+</script>
 
 <style>
 	* {
@@ -21,11 +28,11 @@
 	}
 
 	#app {
-		display: flex;
-		flex-direction: column;
-		color: #2c3e50;
+		font-family: 'Montserrat', sans-serif;
+		color: rgb(198, 219, 241);
 		text-align: center;
-		min-height: 100vh;
+		height: 100vh;
+		background-color: lightblue;
 		background-image: linear-gradient(
 			to bottom,
 			rgba(0, 0, 0, 0.15),
@@ -34,24 +41,22 @@
 	}
 
 	.header {
-		padding: 2rem;
+		padding: 5%;
 	}
 	.logo {
-		width: 6em;
+		width: 4em;
+		background-repeat: no-repeat;
 	}
 	h1 {
 		font-family: 'Paytone One', sans-serif;
-		font-size: 2.5rem;
-		letter-spacing: .1rem;
+		font-size: 2rem;
+		letter-spacing: .15rem;
 		color: rgb(247, 243, 243);
 	}
-	input {
-		width: 60%;
-		height: 2em;
-		border-radius: .5em;
-		border: none;
-		padding: .5em;
-		margin-top: 2em;
-		box-shadow: 0 0 .5em rgb(247, 243, 243);
+
+	@media only screen and (orientation: landscape) {
+		#app {
+			min-height: fit-content;
+		}
 	}
 </style>
