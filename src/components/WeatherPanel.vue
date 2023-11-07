@@ -1,28 +1,56 @@
 <template>
   <div class="search-box">
     <input
+    @keyup.enter="getWeather()"
+    v-model="location"
     type="text"
     class="search-bar"
     placeholder="Search..."/>
   </div>
   <main class="container">
     <div class="top-wrapper">
-      <div class="location">Location</div>
-      <div class="date">Date</div>
+      <div class="location">{{ location }} {{ countryCode }}</div>
+      <div class="date">{{ new Date().toLocaleString() }}</div>
     </div>
-    <div class="temp">20 <span>° C</span></div>
-    <div class="weather">Weather</div>
+    <div class="medium-wrapper">
+      <div class="temp">{{ Math.round(temp) }}<span> ° C</span></div>
+    <div class="feelsLike">{{ feelsLike }}</div>
+    </div>
+    <div class="lower-wrapper">
+      <div class="weather">{{ description }}</div>
+    </div>
   </main>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
-
+    return {
+      weather: {},
+      location: '',
+      countryCode: '',
+      temp: '',
+      feelsLike: '',
+      description: '',
+    }
   },
   methods: {
+    getWeather() {
+      axios.get (
+        'https://api.openweathermap.org/data/2.5/weather?q=' + this.location + ',' + this.countryCode + '&units=metric&appid={api_key}').then(
+        response => {
+          this.location = response.data.name
+          this.countryCode = response.data.sys.country
+          this.temp = response.data.main.temp
+          this.feelsLike = response.data.main.feels_like
+          this.description = response.data.weather[0].description
+        }
+        ).catch(error => (error))
 
-  }
+      }
+    }
 }
 </script>
 
@@ -69,16 +97,16 @@ li {
 	border-top: 2px solid rgba(255, 255, 255, 0.2);
 	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
-.top-wrapper .location {
+.location {
   font-size: 2rem;
 }
-.top-wrapper .date {
+.date {
   font-size: smaller;
 }
 .temp {
   font-size: 4rem;
   font-weight: bolder;
-  text-shadow: 1px 1px 2px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.301);
   font-family: 'Paytone One', sans-serif;
 }
 .temp span {

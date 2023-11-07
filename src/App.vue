@@ -38,6 +38,7 @@
 			rgba(0, 0, 0, 0.15),
 			rgba(0, 0, 0, 0.75)
 		);
+		text-transform: capitalize;
 	}
 
 	.header {
